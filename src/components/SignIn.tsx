@@ -1,17 +1,57 @@
 import * as React from "react";
 import TextField from "@material-ui/core/TextField";
 import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import { Link } from "react-router-dom";
 import { auth, provider } from "../firebase";
 import { GoogleLoginButton } from "react-social-login-buttons";
+import {
+  Button,
+  Checkbox,
+  makeStyles,
+  Typography,
+  Container,
+  CssBaseline,
+} from "@material-ui/core";
 
-export default function SignUp() {
+const useStyles = makeStyles({
+  paper: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  avatar: {
+    margin: "2vh",
+    backgroundColor: "blue",
+  },
+  title: {
+    marginTop: "3vh",
+    alignSelf: "center",
+    fontSize: "3vh",
+  },
+  form: {
+    marginTop: "2vh",
+  },
+  submit: {
+    margin: "2vh",
+  },
+  link: {
+    marginTop: "2vh",
+  },
+  googleLogin: {
+    backgroundColor: "#8db5ec",
+    margin: "2vh",
+  },
+  or: {
+    marginTop: "4vh",
+    textAlign: "center",
+    fontSize: 20,
+  },
+});
+
+export default function SignIn() {
+  const classes = useStyles();
   const glogin = () => {
     auth
       .signInWithPopup(provider)
@@ -25,15 +65,18 @@ export default function SignUp() {
   const login = () => {};
 
   return (
-    <div>
-      <Grid container spacing={2}>
-        <Avatar>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form noValidate>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <div className={classes.title}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+        </div>
+        <form className={classes.form}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -69,7 +112,7 @@ export default function SignUp() {
           >
             Sign In
           </Button>
-          <Grid container>
+          <Grid container className={classes.link}>
             <Grid item xs>
               <Link to="/signUp">Forgot password?</Link>
             </Grid>
@@ -78,10 +121,9 @@ export default function SignUp() {
             </Grid>
           </Grid>
         </form>
-      </Grid>
-      <div>OR</div>
-
-      <GoogleLoginButton onClick={glogin} />
-    </div>
+        <div className={classes.or}> OR</div>
+        <GoogleLoginButton onClick={glogin} />
+      </div>
+    </Container>
   );
 }
