@@ -6,7 +6,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import {
   Button,
   makeStyles,
-  Paper,
   Typography,
   Container,
   CssBaseline,

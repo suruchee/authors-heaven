@@ -58,7 +58,7 @@ export default function SignIn() {
       .then((result) => {
         console.log(result);
         localStorage.setItem("user-info", JSON.stringify(result.user));
-        window.location.href = "/home";
+        window.location.href = "/";
       })
       .catch((error) => alert(error.message));
   };

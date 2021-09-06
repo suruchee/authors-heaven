@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import logo from "../images/logo.jpg";
 import {
   AppBar,
@@ -12,6 +13,7 @@ import {
   makeStyles,
   Menu,
   MenuItem,
+  Tooltip
 } from "@material-ui/core";
 import { UserInfo, IsLoggedIn } from "../Common";
 
@@ -49,7 +51,7 @@ export default function Header() {
     <div>
       <AppBar position="static" color="default" elevation={0}>
         <Toolbar className={classes.toolbar}>
-          <Link className={classes.logo} to="/home">
+          <Link className={classes.logo} to="/">
             <img src={logo} alt="logo" width="50" height="50" />
           </Link>
           <Typography
@@ -67,6 +69,13 @@ export default function Header() {
           <IconButton aria-label="search" color="inherit">
             <SearchIcon />
           </IconButton>
+          <Tooltip title="Add Article">
+            <Link to="/addArticle">
+            <IconButton aria-label="add">
+              <AddCircleIcon />
+            </IconButton>
+            </Link>
+          </Tooltip>
           <IconButton
             aria-label="account of current user"
             aria-controls="menu-appbar"
@@ -93,6 +102,15 @@ export default function Header() {
           >
             <MenuItem onClick={handleClose}>
               {login ? (
+                <Link className={classes.link} to="/profile">
+                  My account
+                </Link>
+              ) : (
+                ""
+              )}
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              {login ? (
                 <Link className={classes.link} to="/signOut/">
                   LogOut
                 </Link>
@@ -102,15 +120,7 @@ export default function Header() {
                 </Link>
               )}
             </MenuItem>
-            <MenuItem onClick={handleClose}>
-              {login ? (
-                <Link className={classes.link} to="/profile">
-                  My account
-                </Link>
-              ) : (
-                ""
-              )}
-            </MenuItem>
+
           </Menu>
         </Toolbar>
       </AppBar>

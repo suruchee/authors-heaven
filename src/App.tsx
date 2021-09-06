@@ -6,6 +6,7 @@ import SignOut from "./components/SignOut";
 import Header from "./components/Header";
 import ArticlesListing from "./components/ArticlesListing";
 import ArticleDetails from "./components/ArticleDetails";
+import AddArticle from "./components/AddArticle";
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
           </Route>
           <Route exact path="/article/:articleId">
             <ArticleDetails />
+          </Route>
+          <Route exact path="/addArticle/">
+            <AddArticle />
           </Route>
         </Switch>
       </BrowserRouter>
