@@ -12,6 +12,8 @@ import {
 } from "@material-ui/core";
 
 import { Link } from "react-router-dom";
+import { loginUser } from "../redux/actions";
+import { SignUpForm } from "./forms/SignUpForm";
 
 const useStyles = makeStyles({
   paper: {
@@ -29,13 +31,17 @@ const useStyles = makeStyles({
   submit: {
     marginTop: "2vh",
   },
-  linkSignIn:{
-    marginTop:"2vh",
-    textAlign:"center"
-  }
+  linkSignIn: {
+    marginTop: "2vh",
+    textAlign: "center",
+  },
 });
 
-export default function SignUp() {
+interface Props {
+  registerUser: (...args: Parameters<typeof loginUser>) => void;
+  username?: string;
+}
+export const SignUp: React.FC<Props> = ({ username, registerUser }) => {
   const classes = useStyles();
 
   return (
@@ -48,69 +54,11 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form}>
-          <Grid container spacing={2}>
-            <Grid item sm={12}>
-              <TextField
-                autoComplete="username"
-                name="username"
-                variant="outlined"
-                required
-                fullWidth
-                id="username"
-                label="Username"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="confirmpassword"
-                label="Confirm Password"
-                type="password"
-                id="confirmpassword"
-                autoComplete="current-password"
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            className={classes.submit}
-          >
-            Sign Up
-          </Button>
-            <Grid item className={classes.linkSignIn}>
-              <Link to="/signIn" >Already have an account? Login Now!</Link>
-          </Grid>
-        </form>
+        <SignUpForm user={username} registerUser={registerUser} />
+        <Grid item className={classes.linkSignIn}>
+          <Link to="/signIn">Already have an account? Login Now!</Link>
+        </Grid>
       </div>
     </Container>
   );
-}
+};

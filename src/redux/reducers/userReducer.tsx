@@ -1,26 +1,28 @@
-import { ActionTypes } from "../constants/actionTypes";
-const intitialState = {
-  articles: [
-    {
-      id: 1,
-      user: "Suruchi",
-      datePosted:"September 14, 2016",
-      title: "Introduction to React",
-      description:
-        "React is a free and open-source front-end JavaScript library for building user interfaces or UI components. It is maintained by Facebook and a community of individual developers and companies. React can be used as a base in the development of single-page or mobile applications",
-      time: "2 min read",
-      category: "Programming",
-    },
-  ],
-  //articles:[],
-};
-// @ts-ignore
-export const userReducer = (state = intitialState, { type, payload }) => {
-  switch (type) {
-    case ActionTypes.REGISTER_REQUEST:
-      return state;
-    //return {...state, articles:payload}
+import { UserState } from "../../types/user";
+import { AnyAction } from "redux";
+import {
+  GOOGLE_LOGIN,
+  LOGIN_ACTION,
+  LOGOUT_ACTION,
+  REGISTER_ACTION,
+} from "../constants/actionTypes";
+
+const initialState: UserState = { isLoggedIn: false };
+
+export function userReducer(
+  state = initialState,
+  action: AnyAction
+): UserState {
+  switch (action.type) {
+    case REGISTER_ACTION:
+      return { ...state, user: action.payload };
+    case LOGIN_ACTION:
+      return { ...state, user: action.payload, isLoggedIn: true };
+    case LOGOUT_ACTION:
+      return { ...state, user: undefined, isLoggedIn: false };
+    case GOOGLE_LOGIN:
+      return { ...state, isLoggedIn: true, firebaseAuth: action.payload };
     default:
       return state;
   }
-};
+}

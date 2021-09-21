@@ -15,6 +15,8 @@ import {
   Container,
   CssBaseline,
 } from "@material-ui/core";
+import { googlelogin, loginUser } from "../redux/actions/userActions";
+import { SignInForm } from "./forms/SignInForm";
 
 const useStyles = makeStyles({
   paper: {
@@ -50,7 +52,18 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SignIn() {
+interface Props {
+  loginUser: (...args: Parameters<typeof loginUser>) => void;
+  googleLogin: (...args: Parameters<typeof googlelogin>) => void;
+  username?: string;
+  isLoggedIn?: boolean;
+}
+export const SignIn: React.FC<Props> = ({
+  username,
+  loginUser,
+  googleLogin,
+  isLoggedIn,
+}) => {
   const classes = useStyles();
   const glogin = () => {
     auth
@@ -62,8 +75,6 @@ export default function SignIn() {
       })
       .catch((error) => alert(error.message));
   };
-  const login = () => {};
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -76,54 +87,18 @@ export default function SignIn() {
             Sign in
           </Typography>
         </div>
-        <form className={classes.form}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            onClick={login}
-            type="submit"
-            fullWidth
-            variant="contained"
-            className="submit"
-          >
-            Sign In
-          </Button>
-          <Grid container className={classes.link}>
-            <Grid item xs>
-              <Link to="/signUp">Forgot password?</Link>
-            </Grid>
-            <Grid item>
-              <Link to="/signUp">{"Don't have an account? Sign Up"}</Link>
-            </Grid>
-          </Grid>
-        </form>
+        <SignInForm user={username} loginUser={loginUser} />
         <div className={classes.or}> OR</div>
         <GoogleLoginButton onClick={glogin} />
       </div>
+      <Grid container className={classes.link}>
+        <Grid item xs>
+          <Link to="/signUp">Forgot password?</Link>
+        </Grid>
+        <Grid item>
+          <Link to="/signUp">{"Don't have an account? Sign Up"}</Link>
+        </Grid>
+      </Grid>
     </Container>
   );
-}
+};
