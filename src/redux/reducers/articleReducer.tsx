@@ -1,26 +1,26 @@
 import { ActionTypes } from "../constants/actionTypes";
 const intitialState = {
-  articles: [
-    {
-      id: 1,
-      user: "Suruchi",
-      datePosted:"September 14, 2016",
-      title: "Introduction to React",
-      description:
-        "React is a free and open-source front-end JavaScript library for building user interfaces or UI components. It is maintained by Facebook and a community of individual developers and companies. React can be used as a base in the development of single-page or mobile applications",
-      time: "2 min read",
-      category: "Programming",
-    },
-  ],
-  //articles:[],
+  articles:[],
 };
 // @ts-ignore
 export const articleReducer = (state = intitialState, { type, payload }) => {
   switch (type) {
     case ActionTypes.SET_ARTICLES:
-      return state;
+      return {...state, articles:payload};
     //return {...state, articles:payload}
     default:
       return state;
   }
 };
+
+// @ts-ignore
+export const selectedArticleReducer = (state={},{type,payload}) =>{
+  switch (type) {
+    case ActionTypes.SELECTED_ARTICLE:
+      return {...state,...payload};
+    case ActionTypes.REMOVE_SELECTED_ARTICLE:
+      return {};
+    default:
+      return state;
+  }
+}

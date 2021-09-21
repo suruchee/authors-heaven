@@ -1,4 +1,6 @@
-import * as React from "react";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import {
   Card,
   CardActionArea,
@@ -8,8 +10,12 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/reducers";
+import {
+  selectedArticle,
+  removeSelectedArticle,
+} from "../redux/actions/articlesActions";
 const useStyles = makeStyles({
   card: {
     marginTop: "2vh",
@@ -23,12 +29,28 @@ const useStyles = makeStyles({
 
 export default function ArticleDetails() {
   const classes = useStyles();
-  const articles = useSelector(
-    (state: RootState) => state.allArticles.articles
-  );
-  console.log(articles);
-  const { id, user, datePosted, title, description, time, category } =
-    articles[0];
+  const article = useSelector((state: RootState) => state.article);
+  const { title, slug, description, body, favourited, published, author } =
+    article;
+  const articleSlug = useParams();
+  const dispatch = useDispatch();
+  const fetchArticleDetail = async () => {
+    const response = await axios
+      .get(
+        `http://authors-social-platform.herokuapp.com/api/v1/articles/${articleSlug}/`
+      )
+      .catch((err) => {
+        console.log("Err", err);
+      });
+    dispatch(selectedArticle(response));
+  };
+  useEffect(() => {
+    if (articleSlug && articleSlug !== "") fetchArticleDetail();
+    return () => {
+      dispatch(removeSelectedArticle());
+    };
+  }, [articleSlug]);
+
   return (
     <div>
       <Container maxWidth="lg">

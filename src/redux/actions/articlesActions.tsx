@@ -7,9 +7,14 @@ export const setArticles = (articles: any) => {
   };
 };
 
-export const selectedArticles = (articles: any) => {
+export const selectedArticle = (articles: any) => {
   return {
-    type: ActionTypes.SELECTED_ARTICLES,
+    type: ActionTypes.SELECTED_ARTICLE,
     payload: articles,
+  };
+};
+export const removeSelectedArticle = () => {
+  return {
+    type: ActionTypes.REMOVE_SELECTED_ARTICLE,
   };
 };

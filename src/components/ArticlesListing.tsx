@@ -6,21 +6,22 @@ import { RootState } from "../redux/reducers";
 import { setArticles } from "../redux/actions/articlesActions";
 
 export default function ArticlesListing() {
-/*  const articles = useSelector(
+  const articles = useSelector(
     (state: RootState) => state.allArticles.articles
   );
   const dispatch = useDispatch();
-  const fetchProducts = async () => {
+  const fetchArticles = async () => {
     const response = await axios
-      .get("https://authorsheaven.com/articles")
+      .get("http://authors-social-platform.herokuapp.com/api/v1/articles/")
       .catch((err) => {
         console.log("Err: ", err);
       });
     dispatch(setArticles(response));
   };
   useEffect(() => {
-    fetchProducts();
-  }, []);*/
+    fetchArticles();
+  }, []);
+  console.log(articles);
   return (
     <div>
       <Article />
