@@ -1,26 +1,16 @@
-import { ActionTypes } from "../constants/actionTypes";
-const intitialState = {
-  articles:[],
-};
-// @ts-ignore
-export const articleReducer = (state = intitialState, { type, payload }) => {
-  switch (type) {
-    case ActionTypes.SET_ARTICLES:
-      return {...state, articles:payload};
-    //return {...state, articles:payload}
-    default:
-      return state;
-  }
-};
+import {
+  GET_ARTICLES_ACTION,
+  DELETE_ARTICLE_ACTION,
+} from "../constants/articleActionTypes";
 
 // @ts-ignore
-export const selectedArticleReducer = (state={},{type,payload}) =>{
+export const articleReducer = (state = {}, { type, payload }) => {
   switch (type) {
-    case ActionTypes.SELECTED_ARTICLE:
-      return {...state,...payload};
-    case ActionTypes.REMOVE_SELECTED_ARTICLE:
+    case GET_ARTICLES_ACTION:
+      return { ...state, ...payload };
+    case DELETE_ARTICLE_ACTION:
       return {};
     default:
       return state;
   }
-}
+};
