@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 
 import { Link } from "react-router-dom";
-import { loginUser } from "../redux/actions/userActions";
+import { registerUser } from "../redux/actions/userActions";
 import { SignUpForm } from "./forms/SignUpForm";
 
 const useStyles = makeStyles({
@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 });
 
 interface Props {
-  registerUser: (...args: Parameters<typeof loginUser>) => void;
+  registerUser: (...args: Parameters<typeof registerUser>) => void;
   username?: string;
 }
 export const SignUpPage: React.FC<Props> = ({ username, registerUser }) => {
@@ -48,7 +48,7 @@ export const SignUpPage: React.FC<Props> = ({ username, registerUser }) => {
         </Typography>
         <SignUpForm user={username} registerUser={registerUser} />
         <Grid item className={classes.linkSignIn}>
-          <Link to="/signIn">Already have an account? Login Now!</Link>
+          <Link to="/signin">Already have an account? Login Now!</Link>
         </Grid>
       </div>
     </Container>

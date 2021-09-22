@@ -1,14 +1,16 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Header from "./components/Header";
-import ArticlesListing from "./components/ArticlesListing";
-import ArticleDetails from "./components/ArticleDetails";
-import AddArticle from "./components/AddArticle";
-import { requireAnonymous } from "./auth";
+import { requireAnonymous, requireAuthenticated } from "./auth";
 import { AppState } from "./types";
 import { connect } from "react-redux";
-import { ToastContainer } from "react-toastify";
-import { signIn, signUp } from "./containers";
+import {
+  AddArticlePage,
+  ArticlePage,
+  ArticlesPage,
+  ConnectedHeader,
+  SignIn,
+  SignUp,
+} from "./containers";
 
 interface Props {
   isLoggedIn?: boolean;
@@ -17,20 +19,24 @@ const App: React.FC<Props> = () => {
   return (
     <div>
       <BrowserRouter>
-        <Header />
-        <ToastContainer autoClose={2000} position="top-right" />
+        <ConnectedHeader />
         <Switch>
-          <Route exact path="/signUp/" component={requireAnonymous(signUp)} />
-          <Route exact path="/signIn/" component={requireAnonymous(signIn)} />
-          <Route exact path="/">
-            <ArticlesListing />
-          </Route>
-          <Route exact path="/article/:articleId">
-            <ArticleDetails />
-          </Route>
-          <Route exact path="/addArticle/">
-            <AddArticle />
-          </Route>
+          <Route exact path="/" component={requireAnonymous(ArticlesPage)} />
+          <Route exact path="/signup/" component={requireAnonymous(SignUp)} />
+          <Route exact path="/signin/" component={requireAnonymous(SignIn)} />
+          <Route
+            exact
+            path="/articles/"
+            component={requireAuthenticated(ArticlesPage)}
+          />
+          <Route
+            path="/article/:slug"
+            component={requireAuthenticated(ArticlePage)}
+          />
+          <Route
+            path="/articles/new"
+            component={requireAuthenticated(AddArticlePage)}
+          />
         </Switch>
       </BrowserRouter>
     </div>

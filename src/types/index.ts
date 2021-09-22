@@ -1,6 +1,7 @@
 import { UserState } from "./user"
-import {ArticleData} from "./article"
+import { ArticlesState } from './article';
 
 export interface AppState {
   auth: UserState;
+  articles:ArticlesState;
 }

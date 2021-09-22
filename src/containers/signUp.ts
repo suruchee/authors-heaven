@@ -8,4 +8,4 @@ const mapStateToProps = (state: AppState) => ({
 });
 const mapDispatchToProps = { registerUser };
 
-export const signUp = connect(mapStateToProps, mapDispatchToProps)(SignUpPage);
+export const SignUp = connect(mapStateToProps, mapDispatchToProps)(SignUpPage);

@@ -65,17 +65,16 @@ export const SignInForm: React.FC<Props> = ({ user, loginUser }) => {
       />
       <TextField
         helperText="Please choose a strong password with numbers, uppercase and special characters"
-        variant="outlined"
-        margin="normal"
-        required
-        fullWidth
-        name="Password"
-        label="Password"
-        type="password"
         id="password"
-        autoComplete="current-password"
+        name="password"
+        label="Password"
+        required
+        type="password"
         value={form.password}
         onChange={handleInputChange}
+        variant="outlined"
+        margin="normal"
+        fullWidth
       />
       <Button type="submit" fullWidth variant="contained" className="submit">
         Sign In

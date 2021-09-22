@@ -1,12 +1,18 @@
 export interface ArticleData {
   title: string;
-  slug: string;
-  description: string;
-  body: string;
-  favorited: boolean;
-  published: boolean;
-  author:string;
+  description?: string;
+  body?: string;
+  favourited?: boolean;
+  published?: boolean;
 }
 
+export interface ApiArticle extends ArticleData {
+  slug?: string;
+  author?: string;
+}
 
-
+export interface ArticlesState {
+  articles: ApiArticle[];
+  newArticle?: ApiArticle;
+  article?: ApiArticle;
+}

@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import { store } from "./redux/store";
 import { LOGOUT_ACTION } from "./redux/constants/userActionTypes";
 import locationHelperBuilder from "redux-auth-wrapper/history4/locationHelper";
@@ -21,8 +20,8 @@ export function action(type: string) {
 
 export const isAuthenticated = (state: AppState) => state.auth.isLoggedIn;
 
-export const redirectIfNotLoggedIn = (response: AxiosResponse) => {
-  if (response.status === 401) {
+export const redirectIfNotLoggedIn = (response: any) => {
+  if (response.detail=== "Token has expired.") {
     store.dispatch(action(LOGOUT_ACTION));
     localStorage.clear();
   }
@@ -40,7 +39,7 @@ export const ifAuthenticated = connectedAuthWrapper(authenticatedOptions);
 
 export const requireAuthenticated = connectedRouterRedirect({
   ...authenticatedOptions,
-  redirectPath: "/login",
+  redirectPath: "/signin/",
 });
 
 const anonymousOptions = {
@@ -53,7 +52,7 @@ export const ifAnonymous = connectedAuthWrapper(anonymousOptions);
 export const requireAnonymous = connectedRouterRedirect({
   ...anonymousOptions,
   redirectPath: (state: AppState, ownProps: string) => {
-    return getRedirectQueryParam(ownProps) || "/dashboard";
+    return getRedirectQueryParam(ownProps) || "/articles/";
   },
   allowRedirectBack: false,
 });

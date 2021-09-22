@@ -1,8 +1,10 @@
 import * as React from "react";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import { Button, makeStyles, Typography } from "@material-ui/core";
+import { makeStyles, Typography } from "@material-ui/core";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
+import { createArticle } from "../redux/actions";
+import { ApiArticle } from "../types/article";
+import { Redirect } from "react-router-dom";
+import { AddArticleForm } from "./forms/AddArticleForm";
 
 const useStyles = makeStyles({
   paper: {
@@ -21,8 +23,18 @@ const useStyles = makeStyles({
   },
 });
 
-export default function AddArticle() {
+interface Props {
+  onSubmit:(
+    ...args: Parameters<typeof createArticle>
+  ) => void;
+  newArticle?: ApiArticle;
+}
+
+export const AddArticle: React.FC<Props> = ({ newArticle, onSubmit }) => {
   const classes = useStyles();
+  if (newArticle){
+    return <Redirect to='/articles'/>
+  }
 
   return (
     <div className={classes.paper}>
@@ -32,43 +44,7 @@ export default function AddArticle() {
       <Typography component="h1" variant="h5">
         Add Article
       </Typography>
-      <form className={classes.form}>
-        <Grid container spacing={2}>
-          <Grid item sm={12}>
-            <TextField
-              autoComplete="title"
-              name="Title"
-              variant="outlined"
-              required
-              fullWidth
-              id="title"
-              label="Title"
-              autoFocus
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              id="detail"
-              label="Detail"
-              name="Detail"
-              autoComplete="Detail"
-              multiline
-              rows={20}
-            />
-          </Grid>
-        </Grid>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          className={classes.submit}
-        >
-          Submit{" "}
-        </Button>
-      </form>
+      <AddArticleForm newArticle={newArticle} onSubmit={onSubmit}/>
     </div>
   );
 }

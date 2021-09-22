@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 import logo from "../images/logo.jpg";
 import {
   AppBar,
@@ -13,9 +13,10 @@ import {
   makeStyles,
   Menu,
   MenuItem,
-  Tooltip
+  Tooltip,
 } from "@material-ui/core";
-import { UserInfo, IsLoggedIn } from "../Common";
+import { UserInfo } from "../Common";
+import { auth } from "../firebase";
 
 const useStyles = makeStyles({
   toolbar: {
@@ -33,9 +34,18 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Header() {
+interface Props {
+  user?: string;
+  logout: () => void;
+  isLoggedIn?: boolean;
+}
+
+export const Header: React.FC<Props> = ({ user, logout, isLoggedIn }) => {
   const classes = useStyles();
-  const login = IsLoggedIn();
+  const logoutUser = () => {
+    logout();
+    auth.signOut();
+  };
   const users = UserInfo();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -70,10 +80,10 @@ export default function Header() {
             <SearchIcon />
           </IconButton>
           <Tooltip title="Add Article">
-            <Link to="/addArticle">
-            <IconButton aria-label="add">
-              <AddCircleIcon />
-            </IconButton>
+            <Link to="/articles/new">
+              <IconButton aria-label="add">
+                <AddCircleIcon />
+              </IconButton>
             </Link>
           </Tooltip>
           <IconButton
@@ -83,7 +93,7 @@ export default function Header() {
             onClick={handleMenu}
             color="inherit"
           >
-            {login ? <Avatar src={users.photoURL} /> : <Avatar />}
+            {isLoggedIn ? <Avatar src={users.photoURL} /> : <Avatar />}
           </IconButton>
           <Menu
             id="menu-appbar"
@@ -101,7 +111,7 @@ export default function Header() {
             onClose={handleClose}
           >
             <MenuItem onClick={handleClose}>
-              {login ? (
+              {isLoggedIn ? (
                 <Link className={classes.link} to="/profile">
                   My account
                 </Link>
@@ -110,20 +120,19 @@ export default function Header() {
               )}
             </MenuItem>
             <MenuItem onClick={handleClose}>
-              {login ? (
-                <Link className={classes.link} to="/signOut/">
+              {isLoggedIn ? (
+                <div className={classes.link} onClick={logoutUser}>
                   LogOut
-                </Link>
+                </div>
               ) : (
-                <Link className={classes.link} to="/signIn/">
+                <Link className={classes.link} to="/signin/">
                   Login
                 </Link>
               )}
             </MenuItem>
-
           </Menu>
         </Toolbar>
       </AppBar>
     </div>
   );
-}
+};
