@@ -3,7 +3,7 @@ import {
   LOGIN_ACTION,
   LOGOUT_ACTION,
   REGISTER_ACTION,
-} from "../constants/actionTypes";
+} from "../constants/userActionTypes";
 import { toast } from "react-toastify";
 import { UserData } from "../../types/user";
 import UserService from "../../services/userService";
@@ -23,7 +23,7 @@ export const logout = () => {
     localStorage.clear();
   };
 };
-export const googlelogin = (user: {} | null) => {
+export const googleLogin = (user: {} | null) => {
   return function (dispatch: Function) {
     dispatch(typedAction(GOOGLE_LOGIN, user));
     toast.success("Login Successful");

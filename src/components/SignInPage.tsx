@@ -1,21 +1,17 @@
 import * as React from "react";
-import TextField from "@material-ui/core/TextField";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { Link } from "react-router-dom";
 import { auth, provider } from "../firebase";
 import { GoogleLoginButton } from "react-social-login-buttons";
 import {
-  Button,
-  Checkbox,
   makeStyles,
   Typography,
   Container,
   CssBaseline,
 } from "@material-ui/core";
-import { googlelogin, loginUser } from "../redux/actions/userActions";
+import { googleLogin, loginUser } from "../redux/actions/userActions";
 import { SignInForm } from "./forms/SignInForm";
 
 const useStyles = makeStyles({
@@ -54,11 +50,11 @@ const useStyles = makeStyles({
 
 interface Props {
   loginUser: (...args: Parameters<typeof loginUser>) => void;
-  googleLogin: (...args: Parameters<typeof googlelogin>) => void;
+  googleLogin: (...args: Parameters<typeof googleLogin>) => void;
   username?: string;
   isLoggedIn?: boolean;
 }
-export const SignIn: React.FC<Props> = ({
+export const SignInPage: React.FC<Props> = ({
   username,
   loginUser,
   googleLogin,

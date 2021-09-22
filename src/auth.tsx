@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { store } from "./redux/store";
-import { LOGOUT_ACTION } from "./redux/constants/actionTypes";
+import { LOGOUT_ACTION } from "./redux/constants/userActionTypes";
 import locationHelperBuilder from "redux-auth-wrapper/history4/locationHelper";
 import { connectedRouterRedirect } from "redux-auth-wrapper/history4/redirect";
 import connectedAuthWrapper from "redux-auth-wrapper/connectedAuthWrapper";

@@ -1,10 +1,8 @@
 import * as React from "react";
-import TextField from "@material-ui/core/TextField";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import {
-  Button,
   makeStyles,
   Typography,
   Container,
@@ -12,7 +10,7 @@ import {
 } from "@material-ui/core";
 
 import { Link } from "react-router-dom";
-import { loginUser } from "../redux/actions";
+import { loginUser } from "../redux/actions/userActions";
 import { SignUpForm } from "./forms/SignUpForm";
 
 const useStyles = makeStyles({
@@ -25,12 +23,6 @@ const useStyles = makeStyles({
     margin: "2vh",
     backgroundColor: "blue",
   },
-  form: {
-    marginTop: "2vh",
-  },
-  submit: {
-    marginTop: "2vh",
-  },
   linkSignIn: {
     marginTop: "2vh",
     textAlign: "center",
@@ -41,7 +33,7 @@ interface Props {
   registerUser: (...args: Parameters<typeof loginUser>) => void;
   username?: string;
 }
-export const SignUp: React.FC<Props> = ({ username, registerUser }) => {
+export const SignUpPage: React.FC<Props> = ({ username, registerUser }) => {
   const classes = useStyles();
 
   return (

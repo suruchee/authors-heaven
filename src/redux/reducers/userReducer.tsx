@@ -5,7 +5,7 @@ import {
   LOGIN_ACTION,
   LOGOUT_ACTION,
   REGISTER_ACTION,
-} from "../constants/actionTypes";
+} from "../constants/userActionTypes";
 
 const initialState: UserState = { isLoggedIn: false };
 

@@ -57,6 +57,6 @@ export const store = createStore(
   applyMiddleware(...middleware)
 );
 
-store.subscribe(() => {
+/*store.subscribe(() => {
   saveState(store.getState());
-});
+});*/

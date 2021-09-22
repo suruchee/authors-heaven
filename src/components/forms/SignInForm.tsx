@@ -1,36 +1,10 @@
 import React, { useState, ChangeEvent } from "react";
 import TextField from "@material-ui/core/TextField";
-import Avatar from "@material-ui/core/Avatar";
-import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { Link } from "react-router-dom";
-import { GoogleLoginButton } from "react-social-login-buttons";
-import {
-  Button,
-  Checkbox,
-  makeStyles,
-  Typography,
-  Container,
-  CssBaseline,
-} from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 import { loginUser } from "../../redux/actions/userActions";
 import { UserData } from "../../types/user";
 
 const useStyles = makeStyles({
-  paper: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  avatar: {
-    margin: "2vh",
-    backgroundColor: "blue",
-  },
-  title: {
-    marginTop: "3vh",
-    alignSelf: "center",
-    fontSize: "3vh",
-  },
   form: {
     marginTop: "2vh",
   },

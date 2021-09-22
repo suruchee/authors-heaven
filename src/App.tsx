@@ -1,30 +1,29 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import SignUp from "./components/SignUp";
-import SignIn from "./components/SignIn";
-import SignOut from "./components/SignOut";
 import Header from "./components/Header";
 import ArticlesListing from "./components/ArticlesListing";
 import ArticleDetails from "./components/ArticleDetails";
 import AddArticle from "./components/AddArticle";
+import { requireAnonymous } from "./auth";
+import { AppState } from "./types";
+import { connect } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import { signIn, signUp } from "./containers";
 
-function App() {
+interface Props {
+  isLoggedIn?: boolean;
+}
+const App: React.FC<Props> = () => {
   return (
     <div>
       <BrowserRouter>
-        <Header/>
+        <Header />
+        <ToastContainer autoClose={2000} position="top-right" />
         <Switch>
-          <Route exact path="/signUp/">
-            <SignUp />
-          </Route>
-          <Route exact path="/signIn/">
-            <SignIn />
-          </Route>
-          <Route exact path="/signOut/">
-            <SignOut />
-          </Route>
+          <Route exact path="/signUp/" component={requireAnonymous(signUp)} />
+          <Route exact path="/signIn/" component={requireAnonymous(signIn)} />
           <Route exact path="/">
-            <ArticlesListing/>
+            <ArticlesListing />
           </Route>
           <Route exact path="/article/:articleId">
             <ArticleDetails />
@@ -36,6 +35,11 @@ function App() {
       </BrowserRouter>
     </div>
   );
-}
+};
 
-export default App;
+const mapStateToProps = (state: AppState) => ({
+  isLoggedIn: state.auth.isLoggedIn,
+});
+
+const connectedApp = connect(mapStateToProps, null)(App);
+export default connectedApp;
