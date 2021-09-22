@@ -1,29 +1,31 @@
-import  {unAuthenticatedInstance} from "../http";
-import {ArticleData} from "../types/article";
+import { authenticatedInstance } from "../http";
+import { ArticleData } from "../types/article";
 
-const getAllArticles = (data:ArticleData) =>{
-  return unAuthenticatedInstance.get("/articles/");
+const getAllArticles = () => {
+  return authenticatedInstance.get("/articles/");
 };
 
-const getArticle = (data:ArticleData) =>{
-  return unAuthenticatedInstance.get(`/articles/`);
+const getArticle = (slug: string) => {
+  return authenticatedInstance.get(`/articles/${slug}`);
 };
-const setArticle = (data:ArticleData) =>{
-  return unAuthenticatedInstance.post(`/articles/`,data);
+
+const createArticle = (data: ArticleData) => {
+  return authenticatedInstance.post(`/articles/`, data);
 };
-const editArticle = (data:ArticleData) =>{
-  return unAuthenticatedInstance.put(`/articles/`,data);
+const editArticle = (slug: string) => {
+  return authenticatedInstance.put(`/articles/${slug}`);
 };
-const deleteArticle = (data:ArticleData) =>{
-  return unAuthenticatedInstance.delete(`/articles/`);
+
+const deleteArticle = (slug: string) => {
+  return authenticatedInstance.delete(`/articles/${slug}`);
 };
 
 const ArticleService = {
   getAllArticles,
   getArticle,
-  setArticle,
+  createArticle,
   editArticle,
-  deleteArticle
+  deleteArticle,
 };
 
 export default ArticleService;

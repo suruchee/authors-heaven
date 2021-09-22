@@ -12,4 +12,4 @@ const mapStateToProps = (state: AppState) => {
 };
 const mapDispatchToProps = { loginUser, logout, googleLogin };
 
-export const signIn = connect(mapStateToProps, mapDispatchToProps)(SignInPage);
+export const SignIn = connect(mapStateToProps, mapDispatchToProps)(SignInPage);

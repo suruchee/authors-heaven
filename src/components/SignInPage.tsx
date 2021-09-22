@@ -65,7 +65,6 @@ export const SignInPage: React.FC<Props> = ({
     auth
       .signInWithPopup(provider)
       .then((result) => {
-        console.log(result);
         localStorage.setItem("user-info", JSON.stringify(result.user));
         window.location.href = "/";
       })
@@ -89,10 +88,10 @@ export const SignInPage: React.FC<Props> = ({
       </div>
       <Grid container className={classes.link}>
         <Grid item xs>
-          <Link to="/signUp">Forgot password?</Link>
+          <Link to="/signup">Forgot password?</Link>
         </Grid>
         <Grid item>
-          <Link to="/signUp">{"Don't have an account? Sign Up"}</Link>
+          <Link to="/signup">{"Don't have an account? Sign Up"}</Link>
         </Grid>
       </Grid>
     </Container>

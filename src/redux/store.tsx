@@ -4,7 +4,7 @@ import { createLogger } from "redux-logger";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { AppState } from "../types";
-import reducers from "./reducers";
+import { rootReducer as reducers } from "./reducers/index";
 
 const thunk = reduxThunk.withExtraArgument({});
 
@@ -57,6 +57,6 @@ export const store = createStore(
   applyMiddleware(...middleware)
 );
 
-/*store.subscribe(() => {
+store.subscribe(() => {
   saveState(store.getState());
-});*/
+});
