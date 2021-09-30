@@ -1,19 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import {
   Card,
   CardActionArea,
   CardContent,
-  CardMedia,
   Container,
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import {
-  getSingleArticle
-
-} from "../redux/actions/articlesActions";
+import { getSingleArticle } from "../redux/actions/articlesActions";
 import { ApiArticle } from "../types/article";
 import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 const useStyles = makeStyles({
   card: {
     marginTop: "2vh",
@@ -23,56 +21,77 @@ const useStyles = makeStyles({
     height: "50%",
     width: "50%",
   },
+  buttonGroup:{
+    margin:"2vh"
+  },
+  left:{
+    alignContent:"left",
+    textDecoration:"none"
+  },
+  center:{
+    alignItems:"center",
+    marginLeft:"45vh"
+  },
+  right:{
+    marginLeft:"45vh"
+  }
 });
 
-interface Props{
+interface Props {
   article?: ApiArticle;
-  fetchArticle:(...args: Parameters<typeof getSingleArticle>) => void;
-};
+  fetchArticle: (...args: Parameters<typeof getSingleArticle>) => void;
+  email?: string;
+}
 
+export const ArticleDetails: React.FC<Props> = ({
+  article,
+  fetchArticle,
+  email,
+}) => {
+  const classes = useStyles();
+  const { pathname: url } = useLocation();
 
-export const ArticleDetails: React.FC<Props> = ({ article, fetchArticle }) => {
-    const classes = useStyles();
-const {pathname:url} = useLocation();
-const getLastItem = (thePath:string) => thePath.substring(thePath.lastIndexOf('/') +1);
-const slug = getLastItem(url);
+  const hasPermission = email === article?.author?.email;
 
-useEffect( () =>{
-  fetchArticle(slug);
-}, [url]);
+  useEffect(() => {
+    fetchArticle(url);
+  }, [url]);
 
   return (
     <div>
       <Container maxWidth="lg">
         <Card className={classes.card}>
           <CardActionArea>
-            <CardMedia
-              className={classes.image}
-              component="img"
-              src="https://previews.123rf.com/images/artmari/artmari2012/artmari201202858/161073538-closeup-view-human-author-memo-icon-woman-arm-record-greet-text-on-white-space-bright-color-ink-draw.jpg"
-            />
             <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
+              <Typography gutterBottom variant="h4" component="h2">
                 {article?.title}
               </Typography>
-              <Typography variant="body2" component="h2">
-               By: {article?.author}
+              <Typography variant="h6" component="h4">
+                By: {article?.author?.username}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
+              <br/><br/>
+              <Typography variant="h6" color="textSecondary" component="p">
                 {article?.description}
               </Typography>
+              <br/>
               <Typography variant="body2" color="textSecondary" component="p">
                 {article?.body}
               </Typography>
             </CardContent>
           </CardActionArea>
-          <div className="article-footer">
-            <button>Edit Article</button>
-            <button>Delete Article</button>
-            <button>Share Article</button>
-          </div>
+          {hasPermission ? (
+            <>
+              <div className={classes.buttonGroup}>
+                <button>
+                  <Link to={`${url}/edit`} className={classes.left}>Edit Article</Link>
+                </button>
+                <button className={classes.center}>Delete Article</button>
+                <button className={classes.right}>Share Article</button>
+              </div>
+            </>
+          ) : null}
         </Card>
       </Container>
     </div>
   );
-}
+};

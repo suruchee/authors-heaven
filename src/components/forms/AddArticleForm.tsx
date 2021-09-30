@@ -1,8 +1,7 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, {  ChangeEvent } from "react";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import { Button, makeStyles } from "@material-ui/core";
-import { createArticle } from "../../redux/actions";
+import { makeStyles, Link } from "@material-ui/core";
 import { ApiArticle, ArticleData } from "../../types/article";
 
 const useStyles = makeStyles({
@@ -16,88 +15,109 @@ const useStyles = makeStyles({
   },
   form: {
     marginTop: "2vh",
+    marginLeft:"10vh",
+    width:"80%"
   },
   submit: {
     marginTop: "2vh",
   },
+  button:{
+    margin:"8vh",
+    marginTop:"5vh",
+    width:"20%",
+    height:"5vh"
+}
 });
- interface Props{
-   onSubmit:(
-     ...args: Parameters<typeof createArticle>
-   ) => void;
-   newArticle?: ApiArticle;
- };
-
-export const AddArticleForm: React.FC<Props> = ({ newArticle, onSubmit }) => {
+interface Props {
+  onSubmit: Function;
+  newArticle?: ApiArticle;
+  form: ArticleData;
+  setForm: Function;
+  context?: string;
+}
+export const AddArticleForm: React.FC<Props> = ({
+  onSubmit,
+  form,
+  setForm,
+  context,
+}) => {
   const classes = useStyles();
-const initialValues: ArticleData={
-  title:"",
-  description:"",
-  body:"",
-  favourited:false,
-  published:false
-};
-const[form, setForm] = useState<ArticleData>(initialValues);
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setForm({ ...form, [name]: value });
+  };
 
-const handleInputChange = (event:ChangeEvent<HTMLInputElement>) => {
-  const {name, value} =  event.target;
-  setForm({...form, [name]:value });
-}
+  const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setForm({ ...form, [name]: value });
+  };
 
-const formToSubmit = {...form, published:true }
-
+  const handleSave = (e: any) => {
+    e.preventDefault();
+    onSubmit(form);
+  };
   return (
-        <form className={classes.form} onSubmit={(e) => { e.preventDefault(); onSubmit(formToSubmit); }}>
-        <Grid container spacing={2}>
-          <Grid item sm={12}>
-            <TextField
-              id="title"
-              name="title"
-              label="Title"
-              required
-              variant="outlined"
-              fullWidth
-              autoFocus
-              value={form.title}
-              onChange={handleInputChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              id="description"
-              label="Description"
-              name="description"
-              autoComplete="Description"
-              value={form.description}
-              onChange={handleInputChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              id="body"
-              label="Body"
-              name="body"
-              multiline
-              rows={20}
-              value={form.body}
-              onChange={handleInputChange}
-            />
-          </Grid>
+    <form className={classes.form}>
+      <Grid container spacing={2}>
+        <Grid item sm={12}>
+          <TextField
+            id="title"
+            name="title"
+            label="Title"
+            required
+            variant="outlined"
+            fullWidth
+            autoFocus
+            value={form.title}
+            onChange={handleInputChange}
+          />
         </Grid>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          className={classes.submit}
-        >
-          Submit{" "}
-        </Button>
-      </form>
+        <Grid item xs={12}>
+          <TextField
+            variant="outlined"
+            required
+            fullWidth
+            id="description"
+            label="Description"
+            name="description"
+            autoComplete="Description"
+            value={form.description}
+            onChange={handleInputChange}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            variant="outlined"
+            required
+            fullWidth
+            id="body"
+            label="Body"
+            name="body"
+            multiline
+            rows={20}
+            value={form.body}
+            onChange={handleTextAreaChange}
+          />
+        </Grid>
+      </Grid>
+      <div>
+        <button className={classes.button}><Link href="/articles/">Cancel</Link></button>
+        {context === "Edit" ? (
+          form.published ? (
+            <button className={classes.button} onClick={(e) => onSubmit(e)}>Update Article</button>
+          ) : (
+            <>
+              <button className={classes.button}onClick={(e) => handleSave(e)}>Update as Draft</button>
+              <button className={classes.button}onClick={(e) => onSubmit(e)}>Update And Publish</button>
+            </>
+          )
+        ) : (
+          <>
+            <button className={classes.button} onClick={(e) => handleSave(e)}>Save as Draft</button>
+            <button className={classes.button} onClick={(e) => onSubmit(e)}>Submit And Publish</button>
+          </>
+        )}
+      </div>
+    </form>
   );
-}
+};

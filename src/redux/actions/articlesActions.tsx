@@ -3,9 +3,9 @@ import { ArticleData } from "../../types/article";
 import { toast } from "react-toastify";
 import {
   DELETE_ARTICLE_ACTION,
-  CREATE_ARTICLE,
+  CREATE_ARTICLE_ACTION,
   GET_ARTICLES_ACTION,
-  GET_ARTICLE_ACTION,
+  GET_ARTICLE_ACTION, EDIT_ARTICLE_ACTION
 } from "../constants/articleActionTypes";
 
 export function typedAction<T extends string>(type: T): { type: T };
@@ -21,7 +21,7 @@ export const createArticle = (data: ArticleData) => {
   return function (dispatch: Function) {
     return ArticleService.createArticle(data)
       .then((response) => {
-        dispatch(typedAction(CREATE_ARTICLE, data));
+        dispatch(typedAction(CREATE_ARTICLE_ACTION, data));
         toast.success("Article Created");
       })
       .catch((e) => {
@@ -31,24 +31,24 @@ export const createArticle = (data: ArticleData) => {
   };
 };
 
-export function fetchAllArticles() {
-  return function (dispatch: Function) {
-    return ArticleService.getAllArticles()
+export function fetchAllArticles(url: string) {
+  return function(dispatch: Function) {
+    return ArticleService.getAllArticles(url)
       .then(({ data }) => {
-        dispatch(typedAction(GET_ARTICLES_ACTION, data));
+        dispatch(typedAction(GET_ARTICLES_ACTION, data.articles));
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
-        toast.error("Error Loading Articles");
+        toast.error('Error While Fetching')
       });
   };
-}
+};
 
-export function getSingleArticle(slug: string) {
+export function getSingleArticle(url: string) {
   return function (dispatch: Function) {
-    return ArticleService.getArticle(slug)
+    return ArticleService.getArticle(url)
       .then(({ data }) => {
-        dispatch(typedAction(GET_ARTICLE_ACTION, data));
+        dispatch(typedAction(GET_ARTICLE_ACTION, data.article));
       })
       .catch((e) => {
         console.log(e);
@@ -57,8 +57,31 @@ export function getSingleArticle(slug: string) {
   };
 }
 
-export const deleteArticle = () => {
+export function updateArticle(url: string, data: ArticleData) {
+  return function(dispatch: Function) {
+    return ArticleService.editArticle(url, data)
+      .then((response) => {
+        dispatch(typedAction(EDIT_ARTICLE_ACTION, data));
+        toast.success('Article Updated');
+      })
+      .catch(e => {
+        console.log(e);
+        toast.error('Failure to update article')
+      });
+  };
+};
+
+
+export const deleteArticle = (url:string) => {
   return function (dispatch: Function) {
-    dispatch(typedAction(DELETE_ARTICLE_ACTION));
+    return ArticleService.deleteArticle(url)
+      .then((response) => {
+        dispatch(typedAction(DELETE_ARTICLE_ACTION));
+        toast.warning('Article Deleted');
+      })
+      .catch(e => {
+        console.log(e);
+        toast.error('Failure to delete article')
+      });
   };
 };

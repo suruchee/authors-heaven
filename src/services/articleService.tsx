@@ -1,23 +1,26 @@
 import { authenticatedInstance } from "../http";
 import { ArticleData } from "../types/article";
 
-const getAllArticles = () => {
-  return authenticatedInstance.get("/articles/");
+const getAllArticles = (url: string) => {
+  return authenticatedInstance.get(`${url}`);
 };
 
-const getArticle = (slug: string) => {
-  return authenticatedInstance.get(`/articles/${slug}`);
+const getArticle = (url: string) => {
+  return authenticatedInstance.get(url);
+};
+const getPublishedArticles = (url: string) => {
+  return authenticatedInstance.get(`${url}`);
 };
 
 const createArticle = (data: ArticleData) => {
   return authenticatedInstance.post(`/articles/`, data);
 };
-const editArticle = (slug: string) => {
-  return authenticatedInstance.put(`/articles/${slug}`);
+const editArticle = (url: string, newData: ArticleData) => {
+  return authenticatedInstance.put(`${url}/`, newData);
 };
 
-const deleteArticle = (slug: string) => {
-  return authenticatedInstance.delete(`/articles/${slug}`);
+const deleteArticle = (url: string) => {
+  return authenticatedInstance.delete(`${url}/`);
 };
 
 const ArticleService = {
@@ -26,6 +29,7 @@ const ArticleService = {
   createArticle,
   editArticle,
   deleteArticle,
+  getPublishedArticles
 };
 
 export default ArticleService;

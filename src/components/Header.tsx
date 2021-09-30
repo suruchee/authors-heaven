@@ -61,7 +61,7 @@ export const Header: React.FC<Props> = ({ user, logout, isLoggedIn }) => {
     <div>
       <AppBar position="static" color="default" elevation={0}>
         <Toolbar className={classes.toolbar}>
-          <Link className={classes.logo} to="/">
+          <Link className={classes.logo} to="/articles/">
             <img src={logo} alt="logo" width="50" height="50" />
           </Link>
           <Typography
@@ -121,9 +121,9 @@ export const Header: React.FC<Props> = ({ user, logout, isLoggedIn }) => {
             </MenuItem>
             <MenuItem onClick={handleClose}>
               {isLoggedIn ? (
-                <div className={classes.link} onClick={logoutUser}>
+                <Link className={classes.link} to="/signin/" onClick={logoutUser}>
                   LogOut
-                </div>
+                </Link>
               ) : (
                 <Link className={classes.link} to="/signin/">
                   Login

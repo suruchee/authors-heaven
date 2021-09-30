@@ -6,11 +6,11 @@ import { getLoggedUser } from "../auth";
 
 const mapStateToProps = (state: AppState) => ({
   article: state.articles?.article,
-  email: getLoggedUser(state)
+  email: getLoggedUser(state),
 });
 const mapDispatchToProps = { fetchArticle: getSingleArticle };
 
-export const ArticlePage = connect(
+export const PublishedArticlePage = connect(
   mapStateToProps,
   mapDispatchToProps
 )(ArticleDetails);

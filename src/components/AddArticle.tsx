@@ -1,8 +1,8 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { makeStyles, Typography } from "@material-ui/core";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import { createArticle } from "../redux/actions";
-import { ApiArticle } from "../types/article";
+import { ApiArticle, ArticleData } from "../types/article";
 import { Redirect } from "react-router-dom";
 import { AddArticleForm } from "./forms/AddArticleForm";
 
@@ -24,16 +24,31 @@ const useStyles = makeStyles({
 });
 
 interface Props {
-  onSubmit:(
-    ...args: Parameters<typeof createArticle>
-  ) => void;
+  onSubmit: (...args: Parameters<typeof createArticle>) => void;
   newArticle?: ApiArticle;
 }
 
 export const AddArticle: React.FC<Props> = ({ newArticle, onSubmit }) => {
   const classes = useStyles();
-  if (newArticle){
-    return <Redirect to='/articles'/>
+
+  const initialValues: ArticleData = {
+    title: "",
+    description: "",
+    body: "",
+    favourited: false,
+    published: false,
+  };
+
+  const [form, setForm] = useState<ArticleData>(initialValues);
+
+  const publishedForm = { ...form, published: true };
+  const handlePublish = (e: any) => {
+    e.preventDefault();
+    onSubmit(publishedForm);
+  };
+
+  if (newArticle) {
+    return <Redirect to="/articles" />;
   }
 
   return (
@@ -44,7 +59,12 @@ export const AddArticle: React.FC<Props> = ({ newArticle, onSubmit }) => {
       <Typography component="h1" variant="h5">
         Add Article
       </Typography>
-      <AddArticleForm newArticle={newArticle} onSubmit={onSubmit}/>
+      <AddArticleForm
+        newArticle={newArticle}
+        onSubmit={handlePublish}
+        form={form}
+        setForm={setForm}
+      />
     </div>
   );
-}
+};
