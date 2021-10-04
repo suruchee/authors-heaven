@@ -15,12 +15,12 @@ const getPublishedArticles = (url: string) => {
 const createArticle = (data: ArticleData) => {
   return authenticatedInstance.post(`/articles/`, data);
 };
-const editArticle = (url: string, newData: ArticleData) => {
-  return authenticatedInstance.put(`${url}/`, newData);
+const editArticle = (slug: string | undefined, newData: ArticleData) => {
+  return authenticatedInstance.put(`articles/${slug}`, newData);
 };
 
-const deleteArticle = (url: string) => {
-  return authenticatedInstance.delete(`${url}/`);
+const deleteArticle = (slug: string | undefined) => {
+  return authenticatedInstance.delete(`articles/${slug}`);
 };
 
 const ArticleService = {
@@ -29,7 +29,7 @@ const ArticleService = {
   createArticle,
   editArticle,
   deleteArticle,
-  getPublishedArticles
+  getPublishedArticles,
 };
 
 export default ArticleService;

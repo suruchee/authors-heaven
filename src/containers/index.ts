@@ -7,3 +7,5 @@ export * from './header';
 export * from './published';
 export * from './publishedArticle';
 export * from './editArticle';
+export * from './editPublished';
+

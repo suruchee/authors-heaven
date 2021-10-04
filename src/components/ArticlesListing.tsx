@@ -52,7 +52,6 @@ export const ArticlesListing: React.FC<Props> = ({
       url: "/articles/published/",
     },
   ];
-  console.log(url);
   return (
     <div>
       <ContainerTabs tabslist={tabslist} currentPageUrl={url} />

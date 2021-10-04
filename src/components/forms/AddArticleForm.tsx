@@ -1,8 +1,9 @@
-import React, {  ChangeEvent } from "react";
+import React, { ChangeEvent } from "react";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles, Link } from "@material-ui/core";
 import { ApiArticle, ArticleData } from "../../types/article";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles({
   paper: {
@@ -15,18 +16,18 @@ const useStyles = makeStyles({
   },
   form: {
     marginTop: "2vh",
-    marginLeft:"10vh",
-    width:"80%"
+    marginLeft: "10vh",
+    width: "80%",
   },
   submit: {
     marginTop: "2vh",
   },
-  button:{
-    margin:"8vh",
-    marginTop:"5vh",
-    width:"20%",
-    height:"5vh"
-}
+  button: {
+    margin: "8vh",
+    marginTop: "5vh",
+    width: "20%",
+    height: "5vh",
+  },
 });
 interface Props {
   onSubmit: Function;
@@ -42,6 +43,8 @@ export const AddArticleForm: React.FC<Props> = ({
   context,
 }) => {
   const classes = useStyles();
+  const history = useHistory();
+
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setForm({ ...form, [name]: value });
@@ -101,20 +104,41 @@ export const AddArticleForm: React.FC<Props> = ({
         </Grid>
       </Grid>
       <div>
-        <button className={classes.button}><Link href="/articles/">Cancel</Link></button>
+        <button
+          className={classes.button}
+          onClick={(e) => {
+            e.preventDefault();
+            history.goBack();
+          }}
+        >
+          Cancel
+        </button>
+        <button className={classes.button}>
+          <Link href="/articles/">Cancel</Link>
+        </button>
         {context === "Edit" ? (
           form.published ? (
-            <button className={classes.button} onClick={(e) => onSubmit(e)}>Update Article</button>
+            <button className={classes.button} onClick={(e) => onSubmit(e)}>
+              Update Article
+            </button>
           ) : (
             <>
-              <button className={classes.button}onClick={(e) => handleSave(e)}>Update as Draft</button>
-              <button className={classes.button}onClick={(e) => onSubmit(e)}>Update And Publish</button>
+              <button className={classes.button} onClick={(e) => handleSave(e)}>
+                Update as Draft
+              </button>
+              <button className={classes.button} onClick={(e) => onSubmit(e)}>
+                Update And Publish
+              </button>
             </>
           )
         ) : (
           <>
-            <button className={classes.button} onClick={(e) => handleSave(e)}>Save as Draft</button>
-            <button className={classes.button} onClick={(e) => onSubmit(e)}>Submit And Publish</button>
+            <button className={classes.button} onClick={(e) => handleSave(e)}>
+              Save as Draft
+            </button>
+            <button className={classes.button} onClick={(e) => onSubmit(e)}>
+              Submit And Publish
+            </button>
           </>
         )}
       </div>

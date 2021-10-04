@@ -5,7 +5,8 @@ import {
   DELETE_ARTICLE_ACTION,
   CREATE_ARTICLE_ACTION,
   GET_ARTICLES_ACTION,
-  GET_ARTICLE_ACTION, EDIT_ARTICLE_ACTION
+  GET_ARTICLE_ACTION,
+  EDIT_ARTICLE_ACTION,
 } from "../constants/articleActionTypes";
 
 export function typedAction<T extends string>(type: T): { type: T };
@@ -16,6 +17,10 @@ export function typedAction<T extends string, P extends any>(
 export function typedAction(type: string, payload?: any) {
   return { type, payload };
 }
+
+export const resetAction = (actionType: string) => ({
+  type: `${actionType}_${"RESET"}`,
+});
 
 export const createArticle = (data: ArticleData) => {
   return function (dispatch: Function) {
@@ -32,17 +37,17 @@ export const createArticle = (data: ArticleData) => {
 };
 
 export function fetchAllArticles(url: string) {
-  return function(dispatch: Function) {
+  return function (dispatch: Function) {
     return ArticleService.getAllArticles(url)
       .then(({ data }) => {
         dispatch(typedAction(GET_ARTICLES_ACTION, data.articles));
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
-        toast.error('Error While Fetching')
+        toast.error("Error While Fetching");
       });
   };
-};
+}
 
 export function getSingleArticle(url: string) {
   return function (dispatch: Function) {
@@ -58,30 +63,35 @@ export function getSingleArticle(url: string) {
 }
 
 export function updateArticle(url: string, data: ArticleData) {
-  return function(dispatch: Function) {
+  return function (dispatch: Function) {
     return ArticleService.editArticle(url, data)
       .then((response) => {
         dispatch(typedAction(EDIT_ARTICLE_ACTION, data));
-        toast.success('Article Updated');
+        toast.success("Article Updated");
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
-        toast.error('Failure to update article')
+        toast.error("Failure to update article");
       });
   };
-};
+}
 
-
-export const deleteArticle = (url:string) => {
+export function deleteArticle(url: string | undefined) {
   return function (dispatch: Function) {
     return ArticleService.deleteArticle(url)
       .then((response) => {
         dispatch(typedAction(DELETE_ARTICLE_ACTION));
-        toast.warning('Article Deleted');
+        toast.warning("Article Deleted");
       })
-      .catch(e => {
+      .catch((e) => {
         console.log(e);
-        toast.error('Failure to delete article')
+        toast.error("Failure to delete article");
       });
+  };
+}
+
+export const resetEditArticle = () => {
+  return (dispatch: Function) => {
+    dispatch(resetAction(EDIT_ARTICLE_ACTION));
   };
 };

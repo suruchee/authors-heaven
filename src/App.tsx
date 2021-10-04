@@ -10,8 +10,8 @@ import {
   SignIn,
   SignUp,
   PublishedArticlesPage,
-  EditArticlePage,
   PublishedArticlePage,
+  EditPublishedArticlePage,
 } from "./containers";
 
 interface Props {
@@ -26,8 +26,8 @@ const App: React.FC<Props> = () => {
           <Route exact path="/signup/" component={requireAnonymous(SignUp)} />
           <Route exact path="/signin/" component={requireAnonymous(SignIn)} />
           <Route
-            path="/articles/:slug/edit"
-            component={requireAuthenticated(EditArticlePage)}
+            path="/articles/published/:slug/edit"
+            component={requireAuthenticated(EditPublishedArticlePage)}
           />
           <Route
             path="/articles/published/:slug"
@@ -50,9 +50,6 @@ const App: React.FC<Props> = () => {
             path="/articles/"
             component={requireAuthenticated(ArticlesPage)}
           />
-
-
-
         </Switch>
       </BrowserRouter>
     </div>
