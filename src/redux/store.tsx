@@ -6,8 +6,6 @@ import storage from "redux-persist/lib/storage";
 import { AppState } from "../types";
 import { rootReducer as reducers } from "./reducers/index";
 
-const thunk = reduxThunk.withExtraArgument({});
-
 const saveState = (appState: AppState) => {
   const state = {
     ...appState,
@@ -45,16 +43,14 @@ const persistConfig = {
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, reducers);
-const middlewareByEnv: any = {
-  development: () => [thunk, createLogger()],
-  production: () => [thunk],
-};
-const middleware = middlewareByEnv[process.env.NODE_ENV]();
+const persistedReducer = persistReducer(persistConfig, reducers)
+
 export const store = createStore(
   persistedReducer,
   loadState(),
-  applyMiddleware(...middleware)
+  process.env.NODE_ENV === "production"
+    ? applyMiddleware(reduxThunk)
+    : applyMiddleware(reduxThunk, createLogger())
 );
 
 store.subscribe(() => {
