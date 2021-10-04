@@ -1,5 +1,7 @@
-# Getting Started with Create React App
+### [![Build Status](https://app.travis-ci.com/suruchee/authors-heaven.svg?branch=master)](https://app.travis-ci.com/suruchee/authors-heaven)
 
+### [![Coverage Status](https://coveralls.io/repos/github/suruchee/authors-heaven/badge.svg?branch=master)](https://coveralls.io/github/suruchee/authors-heaven?branch=master)
+# Getting Started with Create React App
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
