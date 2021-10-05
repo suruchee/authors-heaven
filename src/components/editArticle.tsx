@@ -29,11 +29,6 @@ export const EditArticle: React.FC<Props> = ({
     published: false,
   };
 
-  const [form, setForm] = useState<ArticleData>({
-    ...initialValues,
-    ...article,
-  });
-
   const editUrl = url.replace("/edit", "");
 
   useEffect(() => resetEditArticle, []); // eslint-disable-line
@@ -41,6 +36,11 @@ export const EditArticle: React.FC<Props> = ({
   useEffect(() => {
     fetchArticle(editUrl);
   }, [url, fetchArticle]); // eslint-disable-line
+
+  const [form, setForm] = useState<ArticleData>({
+    ...initialValues,
+    ...article,
+  });
 
   useEffect(() => setForm({...initialValues, ...article }), [article]); // eslint-disable-line
 

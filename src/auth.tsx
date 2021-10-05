@@ -5,6 +5,7 @@ import { connectedRouterRedirect } from "redux-auth-wrapper/history4/redirect";
 import connectedAuthWrapper from "redux-auth-wrapper/connectedAuthWrapper";
 import { AppState } from "./types";
 import { isEmpty } from "lodash";
+
 export const addAuthToken = (data: any, headers?: any) => {
   const userObj = localStorage.getItem("user") || "";
   const user = JSON.parse(userObj);

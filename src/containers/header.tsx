@@ -9,4 +9,7 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = { logout };
-export const ConnectedHeader = connect(mapStateToProps, mapDispatchToProps)(Header);
+export const ConnectedHeader = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);

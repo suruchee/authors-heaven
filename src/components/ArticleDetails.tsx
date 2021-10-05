@@ -1,4 +1,4 @@
-import React, { useEffect ,useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardActionArea,
@@ -7,7 +7,10 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import { deleteArticle, getSingleArticle } from "../redux/actions/articlesActions";
+import {
+  deleteArticle,
+  getSingleArticle,
+} from "../redux/actions/articlesActions";
 import { ApiArticle } from "../types/article";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -22,20 +25,20 @@ const useStyles = makeStyles({
     height: "50%",
     width: "50%",
   },
-  buttonGroup:{
-    margin:"2vh"
+  buttonGroup: {
+    margin: "2vh",
   },
-  left:{
-    alignContent:"left",
-    textDecoration:"none"
+  left: {
+    alignContent: "left",
+    textDecoration: "none",
   },
-  center:{
-    alignItems:"center",
-    marginLeft:"45vh"
+  center: {
+    alignItems: "center",
+    marginLeft: "45vh",
   },
-  right:{
-    marginLeft:"45vh"
-  }
+  right: {
+    marginLeft: "45vh",
+  },
 });
 
 interface Props {
@@ -48,7 +51,7 @@ interface Props {
 export const ArticleDetails: React.FC<Props> = ({
   article,
   fetchArticle,
-                                                  deleteArticle,
+  deleteArticle,
   email,
 }) => {
   const classes = useStyles();
@@ -74,11 +77,12 @@ export const ArticleDetails: React.FC<Props> = ({
               <Typography variant="h6" component="h4">
                 By: {article?.author?.username}
               </Typography>
-              <br/><br/>
+              <br />
+              <br />
               <Typography variant="h6" color="textSecondary" component="p">
                 {article?.description}
               </Typography>
-              <br/>
+              <br />
               <Typography variant="body2" color="textSecondary" component="p">
                 {article?.body}
               </Typography>
@@ -88,9 +92,13 @@ export const ArticleDetails: React.FC<Props> = ({
             <>
               <div className={classes.buttonGroup}>
                 <button>
-                  <Link to={`${url}/edit`} className={classes.left}>Edit Article</Link>
+                  <Link to={`${url}/edit`} className={classes.left}>
+                    Edit Article
+                  </Link>
                 </button>
-                <button onClick={() => setOpenDelete(article?.slug)}>Delete Article</button>
+                <button onClick={() => setOpenDelete(article?.slug)}>
+                  Delete Article
+                </button>
                 <button className={classes.right}>Share Article</button>
               </div>
             </>
@@ -100,7 +108,7 @@ export const ArticleDetails: React.FC<Props> = ({
             closeModal={() => setOpenDelete(undefined)}
             onSubmit={() => deleteArticle(article?.slug)}
             title={`Delete ${article?.title}`}
-            text='Are you sure you want to delete this Article?'
+            text="Are you sure you want to delete this Article?"
           />
         </Card>
       </Container>

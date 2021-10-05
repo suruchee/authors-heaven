@@ -12,6 +12,7 @@ import {
   PublishedArticlesPage,
   PublishedArticlePage,
   EditPublishedArticlePage,
+  EditArticlePage,
 } from "./containers";
 
 interface Props {
@@ -41,6 +42,11 @@ const App: React.FC<Props> = () => {
             path="/articles/published"
             component={requireAuthenticated(PublishedArticlesPage)}
           />
+          <Route
+            path="/articles/:slug/edit"
+            component={requireAuthenticated(EditArticlePage)}
+          />
+
           <Route
             path="/articles/:slug"
             component={requireAuthenticated(ArticlePage)}

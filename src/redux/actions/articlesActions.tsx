@@ -62,9 +62,9 @@ export function getSingleArticle(url: string) {
   };
 }
 
-export function updateArticle(url: string, data: ArticleData) {
+export function updateArticle(slug: string | undefined, data: ArticleData) {
   return function (dispatch: Function) {
-    return ArticleService.editArticle(url, data)
+    return ArticleService.editArticle(slug, data)
       .then((response) => {
         dispatch(typedAction(EDIT_ARTICLE_ACTION, data));
         toast.success("Article Updated");

@@ -6,9 +6,9 @@ import { getLoggedUser } from "../auth";
 
 const mapStateToProps = (state: AppState) => ({
   article: state.articles?.article,
-  email: getLoggedUser(state)
+  email: getLoggedUser(state),
 });
-const mapDispatchToProps = { fetchArticle: getSingleArticle,deleteArticle };
+const mapDispatchToProps = { fetchArticle: getSingleArticle, deleteArticle };
 
 export const ArticlePage = connect(
   mapStateToProps,
